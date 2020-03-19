@@ -1,4 +1,6 @@
 #!/bin/bash
+. ./setup.conf
+
 rm -rf ./bare-metal
 mkdir -p ./bare-metal
 cat << EOF > /root/install-config.yaml
@@ -23,13 +25,22 @@ networking:
   - 172.30.0.0/16
 platform:
   none: {}
-pullSecret: ''
-sshKey: ''
+pullSecret: '${PULLSECRET}'
+sshKey: '${SSHKEY}'
 EOF
 
-cp -p /root/install-config.yaml /root/openshift-fast-install/bare-metal/
-curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.2.10.tar.gz
-tar zxvf openshift-install-linux-4.2.10.tar.gz
+# cp -p /root/install-config.yaml /root/openshift-fast-install/bare-metal/
+cp -p /root/install-config.yaml ./bare-metal/
+#curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.2.14.tar.gz
+#tar zxvf openshift-install-linux-4.2.14.tar.gz
+#curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.2.16.tar.gz
+#tar zxvf openshift-install-linux-4.2.16.tar.gz
+
+curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${LATEST_VERSION}/openshift-install-linux-${LATEST_VERSION}.tar.gz
+tar zxvf openshift-install-linux-${LATEST_VERSION}.tar.gz
+
 ./openshift-install create ignition-configs --dir=bare-metal
 rm -rf /usr/share/nginx/html/ocp/rhcos/ignitions/*
+chmod 666 ./bare-metal/*.ign
 cp -p ./bare-metal/*.ign /usr/share/nginx/html/ocp/rhcos/ignitions/
+

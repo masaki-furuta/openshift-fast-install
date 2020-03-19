@@ -1,2 +1,24 @@
-virsh list --all |awk '{print $2}'|grep -v Name |xargs -I% -t bash -c  'virsh destroy % && virsh undefine --remove-all-storage %'
+export LANG=C
+
+virsh list --all |awk '{print $2}'|grep -v Name | while read vm
+do
+    test -n "$vm" || continue
+
+    case "$vm" in
+	bootstrap | master-[0-9]* | worker-[0-9]*)
+	    echo destroying $vm ...
+	    virsh destroy $vm
+	    virsh undefine --remove-all-storage $vm
+	    ;;
+	*)
+	    echo skip $vm
+	    ;;
+    esac;
+done
+
+virsh net-list --all | grep ocp && ( virsh net-destroy ocp; virsh net-undefine ocp )
+ip a | grep ocp0-nic && nmcli d delete ocp0-nic
+ip a | grep ocp0 &&  ( nmcli c delete ocp0; nmcli d delete ocp0 )
+
+
 

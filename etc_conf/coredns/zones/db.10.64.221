@@ -8,4 +8,4 @@ $TTL 60
 
 ; PTR records
 ; syntax is "last octet" and the host must have fqdn with trailing dot
-117   IN PTR api.test.lab.local.
+106   IN PTR api.test.lab.local.

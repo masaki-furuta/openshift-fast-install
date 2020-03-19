@@ -3,6 +3,8 @@ CURRNTDIR=`pwd`
 echo $CURRNTDIR
 cd /tmp
 useradd coredns
+systemctl stop coredns
+sleep 5
 curl -LO https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz
 tar zxvf coredns_1.6.3_linux_amd64.tgz
 cp -p ./coredns /usr/bin/
@@ -34,6 +36,14 @@ WantedBy=multi-user.target
 EOF
 systemctl daemon-reload
 cd $CURRNTDIR
+
 cp -a ./etc_conf/coredns /etc/
 systemctl start coredns
-ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5|xargs -I% sed -i -e "/^search.*/a nameserver %" /etc/resolv.conf
+
+# ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5|xargs -I% sed -i -e "/^search.*/a nameserver %" /etc/resolv.conf
+
+NAMESERVER=$(ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5)
+grep -v "nameserver $NAMESERVER" /etc/resolv.conf > /tmp/resolv.conf
+sed -i -e "/^search.*/a nameserver $NAMESERVER" /tmp/resolv.conf
+cp /tmp/resolv.conf /etc/resolv.conf
+

@@ -1,4 +1,8 @@
 #!/bin/bash
+
+ROLE=bootstrap
+cp -p boot.ipxe.${ROLE} /usr/share/nginx/html/ipxe/boot.ipxe
+
 virt-install \
       --name bootstrap \
       --hvm \
@@ -11,6 +15,9 @@ virt-install \
       --vcpus 4 \
       --ram 16384 \
       --disk pool=default,size=100,format=qcow2 \
+      --check disk_size=off \
       --nographics \
+      --noautoconsole \
       --boot menu=on,useserial=on
 
+sh restore_boot.ipxe.sh ${ROLE}

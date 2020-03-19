@@ -1,4 +1,8 @@
 #!/bin/bash
+
+ROLE=master
+cp -p boot.ipxe.${ROLE} /usr/share/nginx/html/ipxe/boot.ipxe
+
 for i in `seq 0 2`; do
     mac=$((i+2))
     virt-install \
@@ -13,7 +17,11 @@ for i in `seq 0 2`; do
       --vcpus 8 \
       --ram 16384 \
       --disk pool=default,size=100,format=qcow2 \
+      --check disk_size=off \
       --nographics \
       --noautoconsole \
       --boot menu=on,useserial=on 
 done
+
+sh restore_boot.ipxe.sh ${ROLE}
+
