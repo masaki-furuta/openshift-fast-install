@@ -25,7 +25,7 @@ retry_oc () {
     
 }
 
-export KUBECONFIG=$(find ~ -name kubeconfig | fgrep /bare-metal/)
+export KUBECONFIG=$(find . -name kubeconfig | fgrep /bare-metal/)
 
 retry_oc oc whoami
 retry_oc oc get nodes
