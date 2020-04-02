@@ -18,12 +18,14 @@ retry_oc () {
 	${CMDS}
 	STAT=$?
     done
-    
+
+    echo
     date
+    echo
     
 }
 
-export KUBECONFIG=/home/hfukumot/work/openshift-fast-install/bare-metal/auth/kubeconfig
+export KUBECONFIG=$(find ~ -name kubeconfig | fgrep /bare-metal/)
 
 retry_oc oc whoami
 retry_oc oc get nodes
@@ -44,6 +46,7 @@ do
     STAT=$?
     echo sleeping ${SLEEP} sec...
     sleep ${SLEEP}
+    echo
 done
 
 retry_oc sudo ./openshift-install --dir=bare-metal wait-for install-complete
@@ -51,4 +54,4 @@ retry_oc sudo ./openshift-install --dir=bare-metal wait-for install-complete
 echo try access https://console-openshift-console.apps.test.lab.local using Firefox
 echo "About username and passwd, you can find out the the last openshift-install command output"
 echo "e.g. kubeadmin/4GQVz-NeK4K-bdxG5-SGRxd"
-
+echo

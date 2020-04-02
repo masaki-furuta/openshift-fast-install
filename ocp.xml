@@ -1,11 +1,11 @@
 <network>
   <name>ocp</name>
   <bridge name='ocp0' stp='yes' delay='0'/>
-  <forward dev='enp6s0f0' mode='nat'>
+  <forward dev='eno1' mode='nat'>
     <nat>
       <port start='1024' end='65535'/>
     </nat>
-    <interface dev='enp6s0f0'/>
+    <interface dev='eno1'/>
   </forward>
   <ip address='172.16.0.1' netmask='255.255.255.0'>
     <dhcp>
