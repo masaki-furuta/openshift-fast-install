@@ -3,27 +3,27 @@
         except lab.local mydomain.com
         policy round_robin
     }
-    bind 10.64.221.106
+    bind 10.10.177.204
     errors
     log
 }
 
 lab.local {
     file /etc/coredns/zones/db.lab.local
-    bind 10.64.221.106
+    bind 10.10.177.204
     errors
     log
 }
 172.16.0.0/24 {
     file /etc/coredns/zones/db.172.16.0
-    bind 10.64.221.106
+    bind 10.10.177.204
     errors
     log
 }
 
-10.64.221.0/23 {
-    file /etc/coredns/zones/db.10.64.221
-    bind 10.64.221.106
+10.10.176.0/21 {
+    file /etc/coredns/zones/db.10.10.176
+    bind 10.10.177.204
     errors
     log
 }

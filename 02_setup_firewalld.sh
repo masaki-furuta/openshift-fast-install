@@ -1,4 +1,5 @@
 #!/bin/bash
+systemctl is-enabled firewalld || { echo Skipping firewalld setup; exit 0; }
 firewall-cmd --list-all
 firewall-cmd --list-all-zone
 firewall-cmd --zone=public --add-port=5900-5910/tcp

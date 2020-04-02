@@ -36,7 +36,7 @@ cp -p /root/install-config.yaml ./bare-metal/
 #curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-4.2.16.tar.gz
 #tar zxvf openshift-install-linux-4.2.16.tar.gz
 
-curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${LATEST_VERSION}/openshift-install-linux-${LATEST_VERSION}.tar.gz
+curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${LATEST_VERSION}/openshift-install-linux-${LATEST_VERSION}.tar.gz ${QUICK}
 tar zxvf openshift-install-linux-${LATEST_VERSION}.tar.gz
 
 ./openshift-install create ignition-configs --dir=bare-metal

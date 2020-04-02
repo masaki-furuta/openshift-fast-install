@@ -9,7 +9,7 @@ $ORIGIN lab.local
 
 lab.local.                   IN  A   172.16.0.1
 dns1.lab.local.              IN  A   172.16.0.1
-api.test.lab.local.          IN  A   10.64.221.106
+api.test.lab.local.          IN  A   10.10.177.204
 api-int.test.lab.local.      IN  A   172.16.0.1
 *.apps.test.lab.local.       IN  A   172.16.0.1
 etcd-0.test.lab.local.        IN  A   172.16.0.101
