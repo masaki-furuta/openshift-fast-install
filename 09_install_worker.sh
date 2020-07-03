@@ -16,9 +16,9 @@ for i in `seq 0 $((${WORKERS}-1))`; do
       --os-type linux \
       --os-variant rhel8.0 \
       --network network=ocp,mac="52:54:00:00:01:0${mac}" \
-      --vcpus ${MCPU} \
-      --ram ${MRAM} \
-      --disk pool=default,size=${MDISK},format=qcow2 \
+      --vcpus ${WCPU} \
+      --ram ${WRAM} \
+      --disk pool=default,size=${WDISK},format=qcow2 \
       --check disk_size=off \
       --nographics \
       --noautoconsole \
