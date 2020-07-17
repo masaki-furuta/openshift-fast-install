@@ -46,7 +46,7 @@ IPADDR=10.10.177.204
 
 if [[ ${IPADDR} != $(hostname -i) ]];then
    echo Your primary NIC: $(hostname -i)
-   echo PADDR setting is: ${IPADDR}
+   echo IPADDR setting is: ${IPADDR}
    echo Something went wrong
    exit
 fi
