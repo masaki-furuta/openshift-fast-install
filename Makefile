@@ -7,7 +7,7 @@ approve:
 	./approve_csr.sh
 
 force-approve:
-	oc get csr -o name | xargs oc adm certificate approve
+	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);oc get csr -o name | xargs oc adm certificate approve
 
 sb:
 	virsh start bootstrap
@@ -38,6 +38,9 @@ vcw:
 
 vcw1:
 	virsh console worker-1
+
+watch:
+	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);watch -n1 "./approve_csr.sh;echo;echo;oc get clusterversion;echo;echo;virsh list "
 
 clean:
 	./delete_env
