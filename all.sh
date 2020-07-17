@@ -1,5 +1,18 @@
+#!/bin/bash
+#set -xv
 export LC_ALL=C
 export LANG=C
+
+testenv() {
+    ret=$(getenforce | grep -q Permissive ; echo $?)
+    if [[ $ret -ne 0 ]];then
+	echo "Setting Permissive mode."
+	#echo "(Prevent SELinux errors related to Libvirt and Nginx completely.)"
+	setenforce 0
+	sed -i -e "s/\(^SELINUX=\)enforcing/\\1permissive/" /etc/selinux/config
+	semodule -B
+    fi
+}
 
 lists() {
 cat <<EOF
@@ -28,6 +41,7 @@ destroy_env.sh
 EOF
 }
 
+testenv
 date
 
 for script in $(lists)
