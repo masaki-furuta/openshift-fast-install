@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. ./setup.conf
+
 ROLE=$1
 if [ -z ${ROLE} ]
 then
@@ -7,17 +9,19 @@ then
     exit
 fi
 
-while true
-do
-    echo
-    echo "Please check status of the ${ROLE} VM(s) with virsh console ${ROLE}."
-    echo "Start VM(s) again when it's done and reboot(shutoff) ."
-    read -p "The ${ROLE} VM(s) are already booted ? <yes or no> " ans
-    if [ "X${ans}" = "Xyes" ]
-    then
-	break
-    fi
-done
+if [[ x$AUTOMATIC_INSTALL != xY ]]; then
+    while true
+    do
+        echo
+        echo "Please check status of the ${ROLE} VM(s) with virsh console ${ROLE}."
+        echo "Start VM(s) again when it's done and reboot(shutoff) ."
+        read -p "The ${ROLE} VM(s) are already booted ? <yes or no> " ans
+        if [ "X${ans}" = "Xyes" ]
+        then
+    	break
+        fi
+    done
+fi
 #sleep 25
 
 case $ROLE in

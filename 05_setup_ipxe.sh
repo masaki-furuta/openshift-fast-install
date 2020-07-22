@@ -26,5 +26,5 @@ then
     curl -Lo /usr/share/nginx/html/ocp/rhcos/images/latest/bios.raw.gz https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${VERSION_DIR}/rhcos-${VERSION}-x86_64-metal.x86_64.raw.gz ${QUICK}
 fi
 
-restorecon -RF -v /usr/share/nginx
+
 
