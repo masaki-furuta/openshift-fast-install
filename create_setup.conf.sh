@@ -49,6 +49,7 @@ main() {
     setVal "PULLSECRET" "Copy and paste pullSecret from https://cloud.redhat.com/openshift/install/pull-secret"    
     setVal "SSHKEY" "Paste your public sshKey"
     sed -i -e "s/PULLSECRET=\(.*\)/PULLSECRET='\\1'/g" -e "s/SSHKEY=\(.*\)/SSHKEY='\\1'/g" "${setupFile}"
+    setVal "AUTOMATIC_INSTALL" 'Please set "Y" if you want to install full automatic install. [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571.'
 
     echo "Done!"
     echo "logFile is at ${logFile}"
