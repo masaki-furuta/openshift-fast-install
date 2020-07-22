@@ -43,10 +43,10 @@ watch:
 	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);watch -n1 "./approve_csr.sh;echo;echo;oc get clusterversion;echo;echo;virsh list "
 
 clean:
-	./delete_env
-	-rm boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns
+	./destroy_env.sh; exit 0
+	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns; exit 0
 
 distclean: clean
-	-rm setup.conf
+	rm -fv setup.conf; exit 0
 
 
