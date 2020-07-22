@@ -47,11 +47,11 @@ if [[ x$AUTOMATIC_INSTALL == xY ]]; then
     
     for N in $(virsh list --name | egrep "${VM_RGX}"); do
         while true; do
-    	    echo
     	    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null core@${N} exit 2>/dev/null && break
     	    sleep 5
     	    echo -n .
         done
+	echo
     done
     
     echo "Reboot Done!"
