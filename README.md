@@ -1,11 +1,11 @@
 # openshift-fast-install
 
-openshift-fast-install is a bash scripot for install OpenShift Container Platfrom 4.x on libvirt. 
+openshift-fast-install is a bash script for install OpenShift Container Platfrom 4.x on libvirt. 
 
 ## Installation
 
-Firstly you need to create setup.conf based on setup.conf.sample, or run create_setup.conf.sh ( require installing ipcalc package ) to create it interactively.
-Run 00_all.sh on RHEL8.1 or 8.2 ( or maybe Fedora ).
+Firstly you need to create `setup.conf` based on `setup.conf.sample`, or run `create_setup.conf.sh` ( require installing ipcalc package ) to create it interactively.
+Run `00_all.sh` on RHEL8.1 or 8.2 ( or maybe Fedora ).
 
 ```bash
 ./create_setup.conf.sh
@@ -22,7 +22,7 @@ vim setup.conf
 
 ## Usage
 
-I would recommend following tools / 3 terminal windows for installation with this script.
+I would recommend to prepare following tools / 3 terminal windows for installation with this script.
 
 - #1: Running `00_all.sh` to install OCP4.
 - #2: Running `virt-top` to monitor VM status
