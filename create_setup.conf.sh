@@ -48,6 +48,7 @@ main() {
 	EOF
     setVal "PULLSECRET" "Copy and paste pullSecret from https://cloud.redhat.com/openshift/install/pull-secret"    
     setVal "SSHKEY" "Paste your public sshKey"
+    sed -i -e "s/PULLSECRET=\(.*\)/PULLSECRET='\\1'/g" -e "s/SSHKEY=\(.*\)/SSHKEY='\\1'/g" "${setupFile}"
 
     echo "Done!"
     echo "logFile is at ${logFile}"
