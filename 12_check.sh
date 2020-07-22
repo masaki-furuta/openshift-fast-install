@@ -54,7 +54,7 @@ oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{
     xargs oc adm certificate approve
 oc get nodes
 
-echo try access https://console-openshift-console.apps.test.lab.local using Firefox
+echo try access https://console-openshift-console.apps.test.lab.local using browser.
 echo "About username and passwd, you can find out the the last openshift-install command output"
-echo "e.g. kubeadmin/4GQVz-NeK4K-bdxG5-SGRxd"
-echo
+
+./show_kubeadmin_password.sh
