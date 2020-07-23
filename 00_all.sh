@@ -78,7 +78,9 @@ for script in $(lists)
 do
     if [ -f "$script" ]
     then
+	echo
 	echo ===== start $script script... =====
+	echo
 	if [ $script = "12_check.sh" ]
 	then
 	    sh ./$script	    
