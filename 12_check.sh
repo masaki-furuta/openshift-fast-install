@@ -50,8 +50,11 @@ do
 done
 
 retry_oc sudo ./openshift-install --dir=bare-metal wait-for install-complete
+oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | \
+    xargs oc adm certificate approve
+oc get nodes
 
-echo try access https://console-openshift-console.apps.test.lab.local using Firefox
+echo try access https://console-openshift-console.apps.test.lab.local using browser.
 echo "About username and passwd, you can find out the the last openshift-install command output"
-echo "e.g. kubeadmin/4GQVz-NeK4K-bdxG5-SGRxd"
-echo
+
+./show_kubeadmin_password.sh

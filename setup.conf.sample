@@ -1,0 +1,77 @@
+### RHOCP 4.2
+VERSION=4.2.0
+VERSION_DIR=4.2/4.2.0
+LATEST_VERSION=4.2.16
+
+### RHOCP 4.3
+#VERSION=4.3.0
+#VERSION_DIR=4.3/4.3.0
+#LATEST_VERSION=4.3.0
+
+### RHOCP 4.4
+#VERSION=4.4.3
+#VERSION_DIR=4.4/4.4.3
+#LATEST_VERSION=4.4.11
+
+### RHOCP 4.5
+VERSION=4.5.1
+VERSION_DIR=4.5/4.5.1
+LATEST_VERSION=4.5.1
+
+### BOOTSTRAP
+BCPU=8
+BRAM=16384
+BDISK=100
+
+### MASTER
+MASTERS=3 # =>3
+MCPU=16
+MRAM=16384
+MDISK=100
+
+### WORKER
+WORKERS=2
+WCPU=4
+WRAM=16384
+WDISK=100
+
+### NIC for internet access.
+NETIF=eno1
+# NETIF=enp6s0f0
+
+### IPAddr, Zones definition info for CoreDNS 
+
+IPADDR=10.64.221.106
+IPADDR=10.10.177.204
+
+if [[ ${IPADDR} != $(hostname -i) ]];then
+   echo Your primary NIC: $(hostname -i)
+   echo IPADDR setting is: ${IPADDR}
+   echo Something went wrong
+   exit
+fi
+
+# # ipcalc 10.10.177.204 255.255.248.0
+# Address:        10.10.177.204
+# Network:        10.10.176.0/21
+# Netmask:        255.255.248.0 = 21
+# Broadcast:      10.10.183.255
+# 
+# Address space:  Private Use
+# Address class:  Class A
+# HostMin:        10.10.176.1
+# HostMax:        10.10.183.254
+# Hosts/Net:      2046          
+
+NETWORK_0=10.64.221.0/23 # ZONE name
+NETWORK_0=10.10.176.0/21 # ZONE name
+NETWORK_1=10.64.221      # DB file name
+NETWORK_1=10.10.176      # DB file name
+HOST=204                 # PTR for api
+
+# Copy this from https://cloud.redhat.com/openshift/install/pull-secret
+PULLSECRET=''
+# Your public ssh key
+SSHKEY=''
+
+QUICK='-C -'

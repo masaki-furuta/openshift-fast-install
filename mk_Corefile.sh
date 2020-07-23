@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . ./setup.conf
+mkdir -pv etc_conf/coredns/zones/
 
 cat <<EOF > etc_conf/coredns/Corefile
 .:53 {
