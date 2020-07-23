@@ -1,7 +1,17 @@
 #!/bin/bash
-#yum -y install libvirtd virt-install
-yum -y reinstall libvirt-daemon virt-install
+
+notFound() {
+    for R in $*; do
+        echo -n "Installing ${R}.."
+        rpm -q --quiet ${R} || dnf -y -q install ${R}
+        echo "Done !"
+    done
+}
+
+notFound libvirt-daemon virt-install
+
 systemctl restart libvirtd
+
 virsh net-define ./ocp.xml
 virsh net-start ocp
 virsh net-autostart ocp

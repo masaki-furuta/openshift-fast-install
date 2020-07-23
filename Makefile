@@ -1,7 +1,10 @@
 .PHONY: all approve sb sm sw clean distclean
 
 all:
-	./00_all.sh
+	time ./00_all.sh
+
+config:
+	./create_setup.conf.sh
 
 approve:
 	./approve_csr.sh
@@ -40,11 +43,12 @@ vcw1:
 	virsh console worker-1
 
 watch:
-	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);watch -n1 "./approve_csr.sh;echo;echo;oc get clusterversion;echo;echo;virsh list "
+	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);watch -n1 "oc get nodes;echo;echo;oc get csr;echo;echo;oc get clusterversion;echo;echo;virsh list "
+
 
 clean:
 	./destroy_env.sh; exit 0
-	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe}; exit 0
+	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc}; exit 0
 
 distclean: clean
 	rm -fv setup.conf; exit 0
