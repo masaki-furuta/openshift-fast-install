@@ -11,7 +11,7 @@ make
 
 ## Usage
 
-I would recommend to prepare following tools / 3 terminal windows for installation with this script.
+I would recommend to prepare following 2 respective terminal windows for installation.
 
 - #1: Running `make` to install OCP4.
 - #2: Running `make watch` to monitor VM status
