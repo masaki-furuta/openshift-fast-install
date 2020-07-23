@@ -44,7 +44,7 @@ watch:
 
 clean:
 	./destroy_env.sh; exit 0
-	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns; exit 0
+	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe}; exit 0
 
 distclean: clean
 	rm -fv setup.conf; exit 0
