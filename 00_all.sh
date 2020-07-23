@@ -1,9 +1,9 @@
 #!/bin/bash
-#set -xv
+
 export LC_ALL=C
 export LANG=C
 
-. ./setup.conf
+. ./setup.conf || { echo -en "\nNo config file !\nRun create_setup.conf.sh\n\n"; exit 1; }
 
 testenv() {
     ret=$(getenforce | grep -q Permissive ; echo $?)
@@ -70,6 +70,10 @@ lists() {
     fi
 
 }
+
+echo
+echo ===== start $(basename $0) script... =====
+echo
 
 testenv
 date

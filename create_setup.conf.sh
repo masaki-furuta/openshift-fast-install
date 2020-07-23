@@ -100,7 +100,6 @@ setVal() {
 askYn() {
     read -p "${2} `echo $'\n: '`" ${1}    
     while true; do
-	read -p ": " ${1}
 	case "${!1}" in
 	    Y)
 		ANS=${3}; break ;;
@@ -109,6 +108,7 @@ askYn() {
 	    *)
 		;;
 	esac
+	read -p ": " ${1}
     done
     cat <<- EOF >>"${setupFile}"
 	# ${2}

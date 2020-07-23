@@ -1,7 +1,10 @@
 .PHONY: all approve sb sm sw clean distclean
 
 all:
-	./00_all.sh
+	time ./00_all.sh
+
+config:
+	./create_setup.conf.sh
 
 approve:
 	./approve_csr.sh
