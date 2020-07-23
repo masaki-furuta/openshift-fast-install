@@ -10,7 +10,7 @@ main() {
     logTimestamp "${logFile}"
     backupConf
     echo
-    echo 'Running setup script...'
+    echo ===== Running setup script... =====
     echo
     setVer "VERSION" "Input RHOCP version (4.y.z)"
     setVal "LATEST_VERSION" "Set latest version for installer/cli tools."
@@ -36,11 +36,13 @@ main() {
 	
 	EOF
     echo
+    echo "Checking NIC..."
     lshw -class network -short | grep -v 'Ethernet'
     echo
     setVal "NETIF" "NIC for internet access."
-    echo "Set IPAddr, Zones definition info for CoreDNS"
     IP=$(ip -o -4 a s dev $NETIF |awk '{ print $4 }')
+    if [[ x$IP == x ]]; then echo "No IPADDR !"; exit 1; fi
+    echo "Set IPAddr, Zones definition info for CoreDNS"
     export $(ipcalc -np ${IP})
     FTH=${IP##*.}
     cat <<- EOF >>"${setupFile}"
@@ -113,12 +115,14 @@ askYn() {
 	${1}=${ANS}
 	
 	EOF
+    echo -en "Set ${1}: ${!1}\n" >>"${logFile}" 2>&1    
 }
 
 
 logTimestamp() {
     local filename=${1}
     {
+	echo
         echo "===================" 
         echo "Log generated on $(date)"
         echo "==================="
