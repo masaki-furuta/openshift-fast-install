@@ -2,11 +2,19 @@
 
 openshift-fast-install is a bash script for install OpenShift Container Platfrom 4.x on libvirt. 
 
+## Environment
+
+- Tested on RHEL8.1 ( It should work on RHEL8.2 , Fedora 31/32 too.. please create PR , issues, if won't ).
+- Need 64 to 128 GB RAM by default.
+- See example config below.
+
 ## Installation
 
 ```bash
-make config
-make
+# git clone https://github.com/masaki-furuta/openshift-fast-install.git
+# cd openshift-fast-install
+# make config
+# make
 ```
 
 ## Usage
