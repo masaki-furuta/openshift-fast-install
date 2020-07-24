@@ -63,7 +63,8 @@ PULLSECRET='{"auths":{"cloud.openshift.com":{"auth":<...>''
 # Paste your public sshKey
 SSHKEY='ssh-rsa AAAAB3Nza<...>''
 
-# Please set "Y" if you want to install full automatic install. [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571.
+# Please set "Y" if you want to install full automatic install. [Note] This will
+# use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571.
 AUTOMATIC_INSTALL=Y
 ```
 
