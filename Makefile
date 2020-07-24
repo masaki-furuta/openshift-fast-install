@@ -1,7 +1,7 @@
 .PHONY: all approve sb sm sw clean distclean
 
 all:
-	time ./00_all.sh
+	/bin/time -p ./00_all.sh
 
 config:
 	./create_setup.conf.sh
