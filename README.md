@@ -4,37 +4,19 @@ openshift-fast-install is a bash script for install OpenShift Container Platfrom
 
 ## Installation
 
-Firstly you need to create `setup.conf` based on `setup.conf.sample`, or run `create_setup.conf.sh` ( require installing ipcalc package ) to create it interactively.
-Run `00_all.sh` on RHEL8.1 or 8.2 ( or maybe Fedora ).
-
 ```bash
-./create_setup.conf.sh
-./00_all.sh
-```
-
-or 
-
-```bash
-cp -v setup.conf.sample setup.conf
-vim setup.conf
-./00_all.sh
+make config
+make
 ```
 
 ## Usage
 
-I would recommend to prepare following tools / 3 terminal windows for installation with this script.
+I would recommend to prepare following 2 respective terminal windows for installation.
 
-- #1: Running `00_all.sh` to install OCP4.
-- #2: Running `virt-top` to monitor VM status
-- #3: To run `virsh console $VM` to check install status from console.
+- #1: Running `make` to install OCP4.
+- #2: Running `make watch` to monitor VM status
 
-Also, if you have make command installed, you can also use `make` to start `00_all.sh`.
-
-
-```bash
-make
-```
-
+Also, you can clean up all with `make clean` or `make dist-clean`.
 To check what you could do with make, please check `Makefile`.
 (Or you can also check `dot.bashrc` file to run required/useful commands for installation quickly.
 
@@ -43,4 +25,3 @@ To check what you could do with make, please check `Makefile`.
 Clone or pull requests are welcome.
 
 --
----
