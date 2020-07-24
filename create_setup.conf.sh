@@ -71,6 +71,16 @@ notFound() {
     done
 }
 
+logTimestamp() {
+    local filename=${1}
+    {
+        echo
+        echo "===================" 
+        echo "Log generated on $(date)"
+        echo "==================="
+    } >>"${filename}" 2>&1
+}
+
 backupConf() {
     if [[ -f ${setupFile} ]]; then
 	mv -nv ${setupFile} ${setupFile}-$(date +%F.%H%M%S)
@@ -116,17 +126,6 @@ askYn() {
 	
 	EOF
     echo -en "Set ${1}: ${!1}\n" >>"${logFile}" 2>&1    
-}
-
-
-logTimestamp() {
-    local filename=${1}
-    {
-	echo
-        echo "===================" 
-        echo "Log generated on $(date)"
-        echo "==================="
-    } >>"${filename}" 2>&1
 }
 
 main
