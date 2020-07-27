@@ -2,7 +2,6 @@
 
 #set -xv
 
-hostname
 echo ----------------------------------
 xsos -ox | sed -e '1,3!d'
 echo
