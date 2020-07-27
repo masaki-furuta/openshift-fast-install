@@ -25,7 +25,7 @@ make config all
 make clean all
 ```
 
-- Preserve all downloaded files and remove libvrt & VMs, and reinstall openshift using existing setup.conf
+- Preserve all downloaded files ( required to set `USE_CACHE` in `setup.conf` ) and remove libvrt & VMs, and reinstall openshift using existing setup.conf
 
 ```bash
 make clean-libvirt all
