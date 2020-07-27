@@ -17,6 +17,7 @@ main() {
     echo ===== start $(basename $0) script... =====
     echo
     systemInfo "${logFile}"
+    vmInfo "${logFile}"    
     for script in $(lists)
     do
         if [ -f "$script" ]; then
@@ -74,7 +75,13 @@ logTimestamp() {
 
 systemInfo() {
     ./system_info.sh | tee -a "${1}"
-}    
+}
+
+vmInfo() {
+    echo -----------setup.conf------------- | tee -a "${1}"
+    egrep ^### ./setup.conf -A4 | tee -a "${1}"
+    echo ---------------------------------- | tee -a "${1}"
+}
 
 lists() {
     notFound bc
