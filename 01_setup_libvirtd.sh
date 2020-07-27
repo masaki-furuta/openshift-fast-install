@@ -11,7 +11,7 @@ notFoundGroup() {
 # IDs are available from:
 #     dnf group list -v hidden | awk -F\( '/Virt/ { print $2 }' | sed -e 's/)//g'
 
-notFoundGroup @virtualization-platform @virtualization-client @virtualization-tools
+notFoundGroup @virtualization-platform @virtualization-client @virtualization-tools @virtualization
 
 systemctl restart libvirtd
 sleep 2

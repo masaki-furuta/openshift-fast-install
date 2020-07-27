@@ -8,7 +8,7 @@ notFound() {
     done
 }
 
-notFound nginx
+notFound nginx nginx-mod-stream
 
 mkdir -p /usr/share/nginx/html/ipxe/
 mkdir -p /usr/share/nginx/html/ocp/rhcos/ignitions
