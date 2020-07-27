@@ -1,16 +1,21 @@
 #!/bin/bash
 
-notFound() {
+notFoundGroup() {
     for R in $*; do
         echo -n "Installing ${R}.."
-        rpm -q --quiet ${R} || dnf -y -q install ${R}
+        dnf -y -q install ${R}
         echo "Done !"
     done
 }
 
-notFound libvirt-daemon virt-install
+# IDs are available from:
+#     dnf group list -v hidden | awk -F\( '/Virt/ { print $2 }' | sed -e 's/)//g'
+
+notFoundGroup @virtualization-platform @virtualization-client @virtualization-tools
 
 systemctl restart libvirtd
+sleep 2
+virsh list || exit 1
 
 virsh net-define ./ocp.xml
 virsh net-start ocp
