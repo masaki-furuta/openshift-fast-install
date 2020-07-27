@@ -57,7 +57,7 @@ main() {
     setVal "SSHKEY" "Paste your public ssh key"
     askYn "AUTOMATIC_INSTALL" 'Do you want to install full automatic install ? [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571. [Y/N]' "Y" "N"
     askYn "DEBUG_INSTALL" 'Set loglevel to debug ? [Y/N]' "Y" "N"
-    askYn "USE_CACHE" 'Use cached files for download ? [Y/N]' "-C -" ""
+    #askYn "USE_CACHE" 'Use cached files for download ? [Y/N]' "-C -" ""
     sed -i -e "s/PULLSECRET=\(.*\)/PULLSECRET='\\1'/" -e "s/SSHKEY=\(.*\)/SSHKEY='\\1'/" -e "s/USE_CACHE=\(.*\)/USE_CACHE='\\1'/" "${setupFile}"        
 
     echo "Done!"
