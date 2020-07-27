@@ -3,9 +3,9 @@
 #set -xv
 
 echo ----------------------------------
-xsos -ox | sed -e '1,3!d'
+xsos -ox 2>/dev/null | sed -e '1,3!d'
 echo
-xsos -cx
+xsos -cx 2>/dev/null
 echo Memory
 free -g | sed -e 's/^/  /g'
 echo
