@@ -13,6 +13,7 @@ openshift-fast-install is a bash script for install OpenShift Container Platfrom
 - For Initial installation ( create setup.conf and install openshift using it ).
 
 ```bash
+dnf -y install make git
 git clone https://gitlab.cee.redhat.com/mfuruta/openshift-fast-install
 cd openshift-fast-install
 make config all
