@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/bin/bash -e
+
+BIN=https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz
+BIN=https://github.com/coredns/coredns/releases/download/v1.7.0/coredns_1.7.0_linux_amd64.tgz
+
 CURRNTDIR=`pwd`
 echo $CURRNTDIR
 cd /tmp
@@ -6,7 +10,7 @@ systemctl stop coredns
 sleep 5
 userdel -r coredns 
 useradd coredns
-curl -LO https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz ${USE_CACHE}
+curl -LO ${BIN} ${USE_CACHE}
 tar zxvf coredns_1.6.3_linux_amd64.tgz
 cp -pf ./coredns /usr/bin/
 mkdir -p /usr/share/coredns
