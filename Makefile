@@ -47,7 +47,7 @@ watch:
 
 clean:
 	./destroy_env.sh; exit 0
-	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc}; exit 0
+	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc} /var/lib/libvirt/images/{bootstrap,master,worker}*.qcow2; exit 0
 	dnf -q -y remove @virtualization-platform @virtualization-client @virtualization-tools 2>/dev/null; exit 0
 	dnf -q -y remove nginx lshw ipcalc bc; exit 0
 
