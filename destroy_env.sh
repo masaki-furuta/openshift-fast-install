@@ -16,7 +16,10 @@ do
     esac;
 done
 
-virsh net-list --all | grep ocp && ( virsh net-destroy ocp; virsh net-undefine ocp )
+for N in $(virsh net-list --name --all | grep -v default); do
+    virsh net-destroy ${N}  2>/dev/null
+    virsh net-undefine ${N} 2>/dev/null
+done 
 ip a | grep ocp0-nic && nmcli d delete ocp0-nic
 ip a | grep ocp0 &&  ( nmcli c delete ocp0; nmcli d delete ocp0 )
 

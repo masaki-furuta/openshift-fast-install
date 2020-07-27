@@ -45,6 +45,12 @@ testEnv() {
     fi
 }
 
+backupLog() {
+    if [[ -f ${logFile} ]]; then
+        mv -nv ${logFile} ${logFile}-$(date +%F.%H%M%S)
+    fi
+}
+
 logTimestamp() {
     local filename=${1}
     {
@@ -54,13 +60,17 @@ logTimestamp() {
         echo "==================="
     } >>"${filename}" 2>&1
 }
-backupLog() {
-    if [[ -f ${logFile} ]]; then
-        mv -nv ${logFile} ${logFile}-$(date +%F.%H%M%S)
-    fi
+
+notFound() {
+    for R in $*; do
+        echo -n "Installing ${R}.."
+        rpm -q --quiet ${R} || dnf -y -q install ${R}
+        echo "Done !"
+    done
 }
 
 lists() {
+    notFound bc
     if [[ $(echo "${VERSION%.*} >= 4.5" | bc -l) ]]; then
 	cat <<- EOF
 		### Reflects the default settings.
