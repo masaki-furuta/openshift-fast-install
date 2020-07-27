@@ -10,10 +10,13 @@ logFile="run.log"
 main() {
     testEnv
     #backupLog
+    dnf -q -y install http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
+    notFound xsos rsar
     logTimestamp "${logFile}"
     echo
     echo ===== start $(basename $0) script... =====
     echo
+    systemInfo "${logFile}"
     for script in $(lists)
     do
         if [ -f "$script" ]; then
@@ -51,6 +54,14 @@ backupLog() {
     fi
 }
 
+notFound() {
+    for R in $*; do
+        echo -n "Installing ${R}.."
+        rpm -q --quiet ${R} || dnf -y -q install ${R}
+        echo "Done !"
+    done
+}
+
 logTimestamp() {
     local filename=${1}
     {
@@ -61,13 +72,9 @@ logTimestamp() {
     } >>"${filename}" 2>&1
 }
 
-notFound() {
-    for R in $*; do
-        echo -n "Installing ${R}.."
-        rpm -q --quiet ${R} || dnf -y -q install ${R}
-        echo "Done !"
-    done
-}
+systemInfo() {
+    ./system_info.sh | tee -a "${1}"
+}    
 
 lists() {
     notFound bc
