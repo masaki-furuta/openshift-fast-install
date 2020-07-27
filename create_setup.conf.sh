@@ -37,7 +37,7 @@ main() {
 	EOF
     echo
     echo "Checking NIC..."
-    lshw -class network -short | grep -v 'Ethernet'
+    sudo lshw -class network -short | grep -v 'vnet'
     echo
     setVal "NETIF" "NIC for internet access."
     IP=$(ip -o -4 a s dev $NETIF |awk '{ print $4 }')
@@ -55,10 +55,10 @@ main() {
 	EOF
     setVal "PULLSECRET" "Copy and paste pull secret from https://cloud.redhat.com/openshift/install/pull-secret"    
     setVal "SSHKEY" "Paste your public ssh key"
-    sed -i -e "s/PULLSECRET=\(.*\)/PULLSECRET='\\1'/g" -e "s/SSHKEY=\(.*\)/SSHKEY='\\1'/g" "${setupFile}"
     askYn "AUTOMATIC_INSTALL" 'Do you want to install full automatic install ? [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571. [Y/N]' "Y" "N"
     askYn "DEBUG_INSTALL" 'Set loglevel to debug ? [Y/N]' "Y" "N"
     askYn "USE_CACHE" 'Use cached files for download ? [Y/N]' "-C -" ""
+    sed -i -e "s/PULLSECRET=\(.*\)/PULLSECRET='\\1'/" -e "s/SSHKEY=\(.*\)/SSHKEY='\\1'/" -e "s/USE_CACHE=\(.*\)/USE_CACHE='\\1'/" "${setupFile}"        
 
     echo "Done!"
     echo "logFile is at ${logFile}"
@@ -123,7 +123,7 @@ askYn() {
     done
     cat <<- EOF >>"${setupFile}"
 	# ${2}
-	${1}="${ANS}"
+	${1}=${ANS}
 	
 	EOF
     echo -en "Set ${1}: ${!1}\n" >>"${logFile}" 2>&1    
