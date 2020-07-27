@@ -11,7 +11,7 @@ sleep 5
 userdel -r coredns 
 useradd coredns
 curl -LO ${BIN} ${USE_CACHE}
-tar zxvf coredns_1.6.3_linux_amd64.tgz
+tar zxvf $(basename ${BIN})
 cp -pf ./coredns /usr/bin/
 mkdir -p /usr/share/coredns
 mkdir -p /etc/coredns/zones

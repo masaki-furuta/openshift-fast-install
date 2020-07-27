@@ -92,6 +92,7 @@ lists() {
 		mk_Corefile.sh
 		mk_db.NETWORK_1.sh
 		mk_db.lab.local.sh
+		mk_db.172.16.0.sh
 		mk_boot.ipxe.sh
 		### Remove existing VM environment.
 		destroy_env.sh
@@ -117,6 +118,7 @@ lists() {
 		mk_Corefile.sh
 		mk_db.NETWORK_1.sh
 		mk_db.lab.local.sh
+		mk_db.172.16.0.sh
 		mk_boot.ipxe.sh
 		### Remove existing VM environment.
 		destroy_env.sh
