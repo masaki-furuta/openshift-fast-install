@@ -50,7 +50,10 @@ clean-libvirt:
 
 clean:
 	./destroy_env.sh; exit 0
-	sudo su - -c "rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc} /var/lib/libvirt/images/{bootstrap,master,worker}*.qcow2 /root/bin/{openshift-install,oc,kubectl} /etc/dnsmasq.d/*.conf /etc/coredns /usr/bin/coredns /usr/share/coredns"; exit 0
+	sudo su - -c "rm -rfv /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc} /var/lib/libvirt/images/{bootstrap,master,worker}*.qcow2 /root/bin/{openshift-install,oc,kubectl} /etc/dnsmasq.d/*.conf /etc/coredns /usr/bin/coredns /usr/share/coredns"; exit 0
+	find . -uid 0 -type d -exec sudo chmod 777 {} \; ; exit 0
+	find . -uid 0 -type f -exec sudo chmod 666 {} \; ; exit 0
+	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,install}*; exit 0
 	sudo systemctl stop coredns; exit 0
 	sudo userdel -r coredns; exit 0
 	sudo dnf -q -y remove rsawaroha-release xsos rsar @virtualization-platform @virtualization-client @virtualization-tools nginx lshw ipcalc bc 2>/dev/null; exit 0
