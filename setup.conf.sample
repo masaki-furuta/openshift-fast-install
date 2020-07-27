@@ -74,4 +74,4 @@ PULLSECRET=''
 # Your public ssh key
 SSHKEY=''
 
-QUICK='-C -'
+USE_CACHE='-C -'

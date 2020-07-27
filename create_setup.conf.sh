@@ -58,7 +58,7 @@ main() {
     sed -i -e "s/PULLSECRET=\(.*\)/PULLSECRET='\\1'/g" -e "s/SSHKEY=\(.*\)/SSHKEY='\\1'/g" "${setupFile}"
     askYn "AUTOMATIC_INSTALL" 'Do you want to install full automatic install ? [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571. [Y/N]' "Y" "N"
     askYn "DEBUG_INSTALL" 'Set loglevel to debug ? [Y/N]' "Y" "N"
-    askYn "QUICK" 'Use cached files downloads  ? [Y/N]' "-C -" ""
+    askYn "USE_CACHE" 'Use cached files for download ? [Y/N]' "-C -" ""
 
     echo "Done!"
     echo "logFile is at ${logFile}"

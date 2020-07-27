@@ -6,7 +6,7 @@ systemctl stop coredns
 sleep 5
 userdel -r coredns 
 useradd coredns
-curl -LO https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz ${QUICK}
+curl -LO https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz ${USE_CACHE}
 tar zxvf coredns_1.6.3_linux_amd64.tgz
 cp -pf ./coredns /usr/bin/
 mkdir -p /usr/share/coredns
