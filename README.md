@@ -10,12 +10,31 @@ openshift-fast-install is a bash script for install OpenShift Container Platfrom
 
 ## Installation
 
+- For Initial installation ( create setup.conf and install openshift using it ).
+
 ```bash
-# git clone https://gitlab.cee.redhat.com/mfuruta/openshift-fast-install
-# cd openshift-fast-install
-# make config
-# make
+git clone https://gitlab.cee.redhat.com/mfuruta/openshift-fast-install
+cd openshift-fast-install
+make config all
 ```
+
+- Remove all downloaded files and all setup and reinstall openshift using existing setup.conf.
+
+```bash
+make clean all
+```
+
+- Preserve all downloaded files and remove libvrt & VMs, and reinstall openshift using existing setup.conf
+
+```bash
+make clean-libvirt all
+```
+
+- Remove setup.conf and all downloaded files and setup.
+```bash
+make distclean
+```
+
 
 ## Usage
 
@@ -24,7 +43,7 @@ I would recommend to prepare following 2 respective terminal windows for install
 - #1: Running `make` to install OCP4.
 - #2: Running `make watch` to monitor VM status
 
-Also, you can clean up all with `make clean` or `make dist-clean`.
+Also, you can clean up all with `make clean` or `make distclean`.
 To check what you could do with make, please check `Makefile`.
 (Or you can also check `dot.bashrc` file to run required/useful commands for installation quickly.
 

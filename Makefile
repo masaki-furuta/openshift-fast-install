@@ -45,6 +45,9 @@ vcw1:
 watch:
 	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);watch -n1 "oc get nodes;echo;echo;oc get csr;echo;echo;oc get clusterversion;echo;echo;virsh list "
 
+clean-libvirt:
+	./destroy_env.sh; exit 0
+
 clean:
 	./destroy_env.sh; exit 0
 	rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,installer}-linux* /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc} /var/lib/libvirt/images/{bootstrap,master,worker}*.qcow2 /root/bin/{openshift-install,oc,kubectl} /etc/dnsmasq.d/*.conf; exit 0
