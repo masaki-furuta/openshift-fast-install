@@ -3,7 +3,7 @@
 notFoundGroup() {
     for R in $*; do
         echo -n "Installing ${R}.."
-        dnf -y -q install ${R}
+        sudo dnf -y -q install ${R}
         echo "Done !"
     done
 }

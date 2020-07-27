@@ -10,7 +10,7 @@ logFile="run.log"
 main() {
     testEnv
     #backupLog
-    dnf -q -y install http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
+    sudo dnf -q -y install http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
     notFound xsos rsar
     logTimestamp "${logFile}"
     echo
@@ -44,8 +44,8 @@ testEnv() {
 	echo "Setting Permissive mode."
 	#echo "(Prevent SELinux errors related to Libvirt and Nginx completely.)"
 	setenforce 0
-	sed -i -e "s/\(^SELINUX=\)enforcing/\\1permissive/" /etc/selinux/config
-	semodule -B
+	sudo sed -i -e "s/\(^SELINUX=\)enforcing/\\1permissive/" /etc/selinux/config
+	sudo semodule -B
     fi
 }
 
@@ -58,7 +58,7 @@ backupLog() {
 notFound() {
     for R in $*; do
         echo -n "Installing ${R}.."
-        rpm -q --quiet ${R} || dnf -y -q install ${R}
+        rpm -q --quiet ${R} || sudo dnf -y -q install ${R}
         echo "Done !"
     done
 }

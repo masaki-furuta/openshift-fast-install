@@ -67,7 +67,7 @@ main() {
 notFound() {
     for R in $*; do
 	echo -n "Installing ${R}.."
-	rpm -q --quiet ${R} || dnf -y -q install ${R}
+	rpm -q --quiet ${R} || sudo dnf -y -q install ${R}
 	echo "Done !"
     done
 }
