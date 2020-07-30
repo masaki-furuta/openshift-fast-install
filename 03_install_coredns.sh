@@ -6,7 +6,7 @@ BIN=https://github.com/coredns/coredns/releases/download/v1.7.0/coredns_1.7.0_li
 CURRNTDIR=`pwd`
 echo $CURRNTDIR
 cd /tmp
-systemctl stop coredns
+systemctl stop coredns || pkill -9 coredns
 sleep 5
 userdel -r coredns 
 useradd coredns

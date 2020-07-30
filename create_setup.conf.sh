@@ -24,7 +24,7 @@ main() {
 	
 	### MASTER
 	MASTERS=3 # =>3
-	MCPU=16
+	MCPU=8
 	MRAM=16384
 	MDISK=100
 	

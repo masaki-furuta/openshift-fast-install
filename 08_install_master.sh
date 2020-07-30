@@ -18,7 +18,7 @@ for i in `seq 0 $((${MASTERS}-1))`; do
       --network network=ocp,mac="52:54:00:00:01:0${mac}" \
       --vcpus ${MCPU} \
       --ram ${MRAM} \
-      --disk pool=default,size=${MDISK},format=qcow2 \
+      --disk pool=default,size=${MDISK},format=qcow2,cache=unsafe \
       --check disk_size=off \
       --nographics \
       --noautoconsole \
