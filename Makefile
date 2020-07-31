@@ -45,6 +45,9 @@ vcw1:
 watch:
 	export KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/); watch -n1 "oc get nodes;echo;echo;oc get csr;echo;echo;oc get clusterversion;echo;echo;virsh list "
 
+watch-res:
+	watch -n1 'virsh nodecpustats --percent;virsh nodememstats;free -g'
+
 clean-libvirt:
 	./destroy_env.sh; exit 0
 
