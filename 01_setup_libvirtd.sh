@@ -51,7 +51,7 @@ virsh net-autostart ocp
 
 virsh net-list --all
 
-grep bootstrap.test.lab.local /etc/hosts && exit
+grep -q bootstrap.test.lab.local /etc/hosts && exit
 cat << EOF >> /etc/hosts
 
 
