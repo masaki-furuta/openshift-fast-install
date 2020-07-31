@@ -10,7 +10,7 @@ approve:
 	./approve_csr.sh
 
 force-approve:
-	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);oc get csr -o name | xargs oc adm certificate approve
+	export KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/); oc get csr -o name | xargs oc adm certificate approve
 
 sb:
 	virsh start bootstrap
@@ -43,7 +43,7 @@ vcw1:
 	virsh console worker-1
 
 watch:
-	KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/);watch -n1 "oc get nodes;echo;echo;oc get csr;echo;echo;oc get clusterversion;echo;echo;virsh list "
+	export KUBECONFIG=$(shell find . -name kubeconfig | fgrep /bare-metal/); watch -n1 "oc get nodes;echo;echo;oc get csr;echo;echo;oc get clusterversion;echo;echo;virsh list "
 
 clean-libvirt:
 	./destroy_env.sh; exit 0
