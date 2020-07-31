@@ -11,7 +11,7 @@ notFound() {
 installPkg() {
     . /etc/os-release
     VER=$(echo ${VERSION} | sed -e 's/ .*$//g' -e 's/\..*//g')
-    if [[ ${NAME} =~ 'Red Hat Enterprise Linux Server' ]]; then
+    if [[ ${NAME} =~ 'Red Hat Enterprise Linux' ]]; then
 	if [[ ${VER} -eq 7 ]]; then
 	    OS=RHEL7
 	elif [[ ${VER} -eq 8 ]]; then
