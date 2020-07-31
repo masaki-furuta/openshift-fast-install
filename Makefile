@@ -56,7 +56,7 @@ clean:
 	sudo su -m -c "rm -rfv boot.* ocp.xml etc_conf/dhcpd.conf etc_conf/coredns openshift-{client,install}* /usr/share/nginx/html/{ocp,ipxe} /usr/local/bin/{kubectl,oc} /var/lib/libvirt/images/{bootstrap,master,worker}*.qcow2 /root/bin/{openshift-install,oc,kubectl} /etc/dnsmasq.d/*.conf /etc/coredns /usr/bin/coredns /usr/share/coredns"; exit 0
 	sudo systemctl stop coredns; exit 0
 	sudo userdel -r coredns; exit 0
-	sudo dnf -q -y remove rsawaroha-release xsos rsar @virtualization-platform @virtualization-client @virtualization-tools nginx lshw ipcalc bc 2>/dev/null; exit 0
+	sudo yum -q -y remove rsawaroha-release xsos rsar @virtualization-platform @virtualization-client @virtualization-tools nginx lshw ipcalc bc 2>/dev/null; exit 0
 
 distclean: clean
 	rm -fv setup.conf; exit 0

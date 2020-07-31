@@ -10,7 +10,7 @@ logFile="run.log"
 main() {
     testEnv
     #backupLog
-    sudo dnf -q -y install http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
+    addXsos
     notFound xsos rsar
     logTimestamp "${logFile}"
     echo
@@ -55,12 +55,45 @@ backupLog() {
     fi
 }
 
+addXsos() {
+    rpm -q --quiet rsawaroha-release || \
+	installPkg http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
+}
+
 notFound() {
     for R in $*; do
         echo -n "Installing ${R}.."
-        rpm -q --quiet ${R} || sudo dnf -y -q install ${R}
+	rpm -q --quiet ${R} || installPkg ${R}
         echo "Done !"
     done
+}
+
+installPkg() {
+    . /etc/os-release
+    VER=$(echo ${VERSION} | sed -e 's/ .*$//g' -e 's/\..*//g')
+    if [[ ${NAME} =~ 'Red Hat Enterprise Linux Server' ]]; then
+	if [[ ${VER} -eq 7 ]]; then
+	    OS=RHEL7
+	elif [[ ${VER} -eq 8 ]]; then
+	    OS=RHEL8
+	else
+	    echo "Can't detect OS version !"
+	    exit 1
+	fi
+    elif [[ ${NAME} =~ 'Fedora' ]]; then
+	OS=Fedora
+    fi
+    case $OS in
+	RHEL7)
+	    #addEpel
+	    sudo yum -y -q install $*
+	    ;;
+	RHEL8|Fedora)
+	    sudo dnf -y -q install $*	    
+	    ;;
+	*)
+	    ;;
+    esac
 }
 
 logTimestamp() {
