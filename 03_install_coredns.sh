@@ -1,19 +1,23 @@
-#!/bin/bash
+#!/bin/bash -e
+
+BIN=https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz
+BIN=https://github.com/coredns/coredns/releases/download/v1.7.0/coredns_1.7.0_linux_amd64.tgz
+
 CURRNTDIR=`pwd`
 echo $CURRNTDIR
 cd /tmp
-systemctl stop coredns
+sudo systemctl stop coredns || sudo pkill -9 coredns
 sleep 5
-userdel -r coredns 
-useradd coredns
-curl -LO https://github.com/coredns/coredns/releases/download/v1.6.3/coredns_1.6.3_linux_amd64.tgz ${QUICK}
-tar zxvf coredns_1.6.3_linux_amd64.tgz
-cp -pf ./coredns /usr/bin/
-mkdir -p /usr/share/coredns
-mkdir -p /etc/coredns/zones
-chown -R root.coredns /etc/coredns
-chmod -R 755 /etc/coredns
-cat << EOF > /etc/systemd/system/coredns.service
+sudo userdel -r coredns 
+sudo useradd coredns
+curl -LO ${BIN} ${USE_CACHE}
+tar zxvf $(basename ${BIN})
+sudo cp -pf ./coredns /usr/bin/
+sudo mkdir -p /usr/share/coredns
+sudo mkdir -p /etc/coredns/zones
+sudo chown -R root.coredns /etc/coredns
+sudo chmod -R 755 /etc/coredns
+sudo cat << EOF > /etc/systemd/system/coredns.service
 [Unit]
 Description=CoreDNS DNS server
 Documentation=https://coredns.io
@@ -35,13 +39,13 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl daemon-reload
+sudo systemctl daemon-reload
 cd $CURRNTDIR
 
-cp -a ./etc_conf/coredns /etc/
-systemctl start coredns
+sudo cp -a ./etc_conf/coredns /etc/
+sudo systemctl start coredns
 sleep 5
-systemctl show -p SubState --value coredns || exit 1
+sudo systemctl show -p SubState --value coredns || exit 1
 
 
 # ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5|xargs -I% sed -i -e "/^search.*/a nameserver %" /etc/resolv.conf
@@ -49,5 +53,5 @@ systemctl show -p SubState --value coredns || exit 1
 NAMESERVER=$(ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5)
 grep -v "nameserver $NAMESERVER" /etc/resolv.conf > /tmp/resolv.conf
 sed -i -e "/^search.*/a nameserver $NAMESERVER" /tmp/resolv.conf
-cp /tmp/resolv.conf /etc/resolv.conf
+sudo cp /tmp/resolv.conf /etc/resolv.conf
 head -100v /etc/resolv.conf

@@ -16,7 +16,7 @@ virt-install \
       --network network=ocp,mac="52:54:00:00:01:01" \
       --vcpus ${BCPU} \
       --ram ${BRAM} \
-      --disk pool=default,size=${BDISK},format=qcow2 \
+      --disk pool=default,size=${BDISK},format=qcow2,cache=unsafe \
       --check disk_size=off \
       --nographics \
       --noautoconsole \

@@ -4,18 +4,40 @@ openshift-fast-install is a bash script for install OpenShift Container Platfrom
 
 ## Environment
 
-- Tested on RHEL8.1 ( It should work on RHEL8.2 , Fedora 31/32 too.. please create PR , issues, if won't ).
+- Tested on RHEL8.1 and Fedora 32 ( It should work on RHEL8.2 , Fedora 31 too.. please create PR , issues, if won't ).
 - Need 64 to 128 GB RAM by default.
 - See example config below.
 
 ## Installation
 
+- For Initial installation ( create setup.conf and install openshift using it ).
+
 ```bash
 # git clone https://github.com/masaki-furuta/openshift-fast-install.git
 # cd openshift-fast-install
-# make config
-# make
+# make config all
 ```
+
+- Remove all downloaded files and all setup and reinstall openshift using existing setup.conf.
+
+```bash
+make clean all
+```
+
+<!--
+- Preserve all downloaded files ( required to set `USE_CACHE` in `setup.conf` ) and remove libvrt & VMs, and reinstall openshift using existing setup.conf
+
+```bash
+make clean-libvirt all
+>>>>>>> upstream/master
+```
+-->
+
+- Remove setup.conf and all downloaded files and setup.
+```bash
+make distclean
+```
+
 
 ## Usage
 
@@ -24,13 +46,51 @@ I would recommend to prepare following 2 respective terminal windows for install
 - #1: Running `make` to install OCP4.
 - #2: Running `make watch` to monitor VM status
 
-Also, you can clean up all with `make clean` or `make dist-clean`.
+Also, you can clean up all with `make clean` or `make distclean`.
 To check what you could do with make, please check `Makefile`.
 (Or you can also check `dot.bashrc` file to run required/useful commands for installation quickly.
 
 ## Config and Log
 
-Here's sample config and logs.
+What you need to input when running `make config`.
+```bash
+# make config
+./create_setup.conf.sh
+Installing lshw..Done !
+Installing ipcalc..Done !
+Installing bc..Done !
+
+===== Running setup script... =====
+
+Input RHOCP version (4.y.z) 
+: 4.5.2
+Set latest version for installer/cli tools. 
+: 4.5.2
+Set default value for BOOTSTRAP MASTER WORKER
+
+Checking NIC...
+WARNING: you should run this program as super-user.
+WARNING: output may be incomplete or inaccurate, you should run this program as super-user.
+H/W path           Device      Class          Description
+=========================================================
+/0/100/1c.1/0      wlp3s0      network        Wireless 7260
+
+NIC for internet access. 
+: wlp3s0
+Set IPAddr, Zones definition info for CoreDNS
+Copy and paste pull secret from https://cloud.redhat.com/openshift/install/pull-secret 
+: {"auths":{"cloud.openshift.com":{"auth":"<...>
+Paste your public ssh key 
+: ssh-rsa AAAA<...>
+Do you want to install full automatic install ? [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571. [Y/N] 
+: Y
+Set loglevel to debug ? [Y/N] 
+: N
+Done!
+logFile is at input.log
+```
+
+Here's sample config file and logs.
 ```bash
 # cat setup.conf
 # Input RHOCP version (4.y.z)

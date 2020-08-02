@@ -3,15 +3,43 @@
 notFoundGroup() {
     for R in $*; do
         echo -n "Installing ${R}.."
-        dnf -y -q install ${R}
+	installPkg ${R}
         echo "Done !"
     done
+}
+
+installPkg() {
+    . /etc/os-release
+    VER=$(echo ${VERSION} | sed -e 's/ .*$//g' -e 's/\..*//g')
+    if [[ ${NAME} =~ 'Red Hat Enterprise Linux' ]]; then
+	if [[ ${VER} -eq 7 ]]; then
+	    OS=RHEL7
+	elif [[ ${VER} -eq 8 ]]; then
+	    OS=RHEL8
+	else
+	    echo "Can't detect OS version !"
+	    exit 1
+	fi
+    elif [[ ${NAME} =~ 'Fedora' ]]; then
+	OS=Fedora
+    fi
+    case $OS in
+	RHEL7)
+	    #addEpel
+	    sudo yum -y -q install $*
+	    ;;
+	RHEL8|Fedora)
+	    sudo dnf -y -q install $*	    
+	    ;;
+	*)
+	    ;;
+    esac
 }
 
 # IDs are available from:
 #     dnf group list -v hidden | awk -F\( '/Virt/ { print $2 }' | sed -e 's/)//g'
 
-notFoundGroup @virtualization-platform @virtualization-client @virtualization-tools
+notFoundGroup @virtualization-platform @virtualization-client @virtualization-tools @virtualization
 
 systemctl restart libvirtd
 sleep 2
@@ -23,7 +51,7 @@ virsh net-autostart ocp
 
 virsh net-list --all
 
-grep bootstrap.test.lab.local. /etc/hosts && exit
+grep -q bootstrap.test.lab.local /etc/hosts && exit
 cat << EOF >> /etc/hosts
 
 

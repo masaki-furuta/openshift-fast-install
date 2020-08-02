@@ -74,4 +74,9 @@ PULLSECRET=''
 # Your public ssh key
 SSHKEY=''
 
-QUICK='-C -'
+# Please set "Y" if you want to install full automatic install. [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571.
+AUTOMATIC_INSTALL=Y
+
+# Set loglevel to debug ? [Y/N]
+DEBUG_INSTALL=N
+

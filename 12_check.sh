@@ -14,6 +14,7 @@ retry_oc () {
     do
 	echo sleeping ${SLEEP} sec...
 	sleep ${SLEEP}
+	./approve_csr.sh
 	echo "${CMDS} - again"
 	${CMDS}
 	STAT=$?

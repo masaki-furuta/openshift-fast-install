@@ -10,10 +10,14 @@ logFile="run.log"
 main() {
     testEnv
     #backupLog
+    addXsos
+    notFound xsos rsar
     logTimestamp "${logFile}"
     echo
     echo ===== start $(basename $0) script... =====
     echo
+    systemInfo "${logFile}"
+    vmInfo "${logFile}"    
     for script in $(lists)
     do
         if [ -f "$script" ]; then
@@ -40,8 +44,8 @@ testEnv() {
 	echo "Setting Permissive mode."
 	#echo "(Prevent SELinux errors related to Libvirt and Nginx completely.)"
 	setenforce 0
-	sed -i -e "s/\(^SELINUX=\)enforcing/\\1permissive/" /etc/selinux/config
-	semodule -B
+	sudo sed -i -e "s/\(^SELINUX=\)enforcing/\\1permissive/" /etc/selinux/config
+	sudo semodule -B
     fi
 }
 
@@ -49,6 +53,47 @@ backupLog() {
     if [[ -f ${logFile} ]]; then
         mv -nv ${logFile} ${logFile}-$(date +%F.%H%M%S)
     fi
+}
+
+addXsos() {
+    rpm -q --quiet rsawaroha-release || \
+	installPkg http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
+}
+
+notFound() {
+    for R in $*; do
+        echo -n "Installing ${R}.."
+	rpm -q --quiet ${R} || installPkg ${R}
+        echo "Done !"
+    done
+}
+
+installPkg() {
+    . /etc/os-release
+    VER=$(echo ${VERSION} | sed -e 's/ .*$//g' -e 's/\..*//g')
+    if [[ ${NAME} =~ 'Red Hat Enterprise Linux' ]]; then
+	if [[ ${VER} -eq 7 ]]; then
+	    OS=RHEL7
+	elif [[ ${VER} -eq 8 ]]; then
+	    OS=RHEL8
+	else
+	    echo "Can't detect OS version !"
+	    exit 1
+	fi
+    elif [[ ${NAME} =~ 'Fedora' ]]; then
+	OS=Fedora
+    fi
+    case $OS in
+	RHEL7)
+	    #addEpel
+	    sudo yum -y -q install $*
+	    ;;
+	RHEL8|Fedora)
+	    sudo dnf -y -q install $*	    
+	    ;;
+	*)
+	    ;;
+    esac
 }
 
 logTimestamp() {
@@ -61,12 +106,14 @@ logTimestamp() {
     } >>"${filename}" 2>&1
 }
 
-notFound() {
-    for R in $*; do
-        echo -n "Installing ${R}.."
-        rpm -q --quiet ${R} || dnf -y -q install ${R}
-        echo "Done !"
-    done
+systemInfo() {
+    ./system_info.sh | tee -a "${1}"
+}
+
+vmInfo() {
+    echo -----------setup.conf------------- | tee -a "${1}"
+    egrep ^### ./setup.conf -A4 | tee -a "${1}"
+    echo ---------------------------------- | tee -a "${1}"
 }
 
 lists() {
@@ -78,6 +125,7 @@ lists() {
 		mk_Corefile.sh
 		mk_db.NETWORK_1.sh
 		mk_db.lab.local.sh
+		mk_db.172.16.0.sh
 		mk_boot.ipxe.sh
 		### Remove existing VM environment.
 		destroy_env.sh
@@ -103,6 +151,7 @@ lists() {
 		mk_Corefile.sh
 		mk_db.NETWORK_1.sh
 		mk_db.lab.local.sh
+		mk_db.172.16.0.sh
 		mk_boot.ipxe.sh
 		### Remove existing VM environment.
 		destroy_env.sh
