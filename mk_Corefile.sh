@@ -5,7 +5,7 @@ mkdir -pv etc_conf/coredns/zones/
 
 cat <<EOF > etc_conf/coredns/Corefile
 .:53 {
-    forward . 10.68.5.26:53 10.64.255.25:53 {
+    forward . ${NAMESERVERS} {
         except lab.local mydomain.com
         policy round_robin
     }
