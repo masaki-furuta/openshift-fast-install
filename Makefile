@@ -6,6 +6,9 @@ all:
 login:
 	./oc_login.sh
 
+cluster-id:
+	./get_cluster-id.sh
+
 config:
 	./create_setup.conf.sh
 
