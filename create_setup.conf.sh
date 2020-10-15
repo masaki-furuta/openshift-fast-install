@@ -45,12 +45,15 @@ main() {
     echo "Set IPAddr, Zones definition info for CoreDNS"
     export $(ipcalc -np ${IP})
     FTH=${IP##*.}
+    NAMESERVERS=$(cat /etc/resolv.conf |grep nameserver |grep -v ${IP%%/*} | awk '{ print $2 }' | tr '\n' ' ')
     cat <<- EOF >>"${setupFile}"
 	# Set IPAddr, Zones definition info for CoreDNS"
 	IPADDR=${IP%%/*}
 	NETWORK_0=${NETWORK}/${PREFIX} # ZONE name
 	NETWORK_1=${NETWORK%.*}	# DB file name
 	HOST=${FTH%%/*}		# PTR for api
+	NAMESERVERS="${NAMESERVERS}"	# NameServer for Corefile
+
 
 	EOF
     setVal "PULLSECRET" "Copy and paste pull secret from https://cloud.redhat.com/openshift/install/pull-secret"    

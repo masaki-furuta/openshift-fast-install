@@ -3,6 +3,9 @@
 all:
 	/bin/time -p ./00_all.sh
 
+login:
+	./oc_login.sh
+
 config:
 	./create_setup.conf.sh
 
