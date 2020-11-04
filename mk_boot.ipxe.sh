@@ -11,6 +11,22 @@ then
     exit
 fi
 
+if [[ ${VERSION} =~ ^4\.+([6-9])\.+([0-9]) ]]
+then
+cat << EOF > boot.ipxe.${ROLE}
+#!ipxe
+
+# Variables are specified in boot.ipxe.cfg
+
+# Figure out if client is 64-bit capable
+cpuid --ext 29 && set arch x64 || set arch x86
+cpuid --ext 29 && set archl amd64 || set archl i386
+
+kernel  http://172.16.0.1:8000/ipxe/rhcos-${VERSION}-x86_64-installer-kernel ip=dhcp rd.neednet=1 initrd=http://172.16.0.1:8000/ipxe/rhcos-${VERSION}-x86_64-installer-initramfs.img console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.insecure=yes coreos.inst.install_dev=vda coreos.live.rootfs_url=http://172.16.0.1:8000/ocp/rhcos/images/latest/bios.raw.gz coreos.inst.ignition_url=http://172.16.0.1:8000/ocp/rhcos/ignitions/${ROLE}.ign
+initrd http://172.16.0.1:8000/ipxe/rhcos-${VERSION}-x86_64-installer-initramfs.img
+boot
+EOF
+else
 cat << EOF > boot.ipxe.${ROLE}
 #!ipxe
 
@@ -24,7 +40,9 @@ kernel  http://172.16.0.1:8000/ipxe/rhcos-${VERSION}-x86_64-installer-kernel ip=
 initrd http://172.16.0.1:8000/ipxe/rhcos-${VERSION}-x86_64-installer-initramfs.img
 boot
 EOF
+fi
 }
+
 
 mkrole bootstrap
 mkrole master
