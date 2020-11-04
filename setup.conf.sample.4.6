@@ -1,0 +1,46 @@
+# Input RHOCP version (4.y.z)
+VERSION=4.6.1
+VERSION_DIR=4.6/4.6.1
+# Set latest version for installer/cli tools.
+LATEST_VERSION=4.6.1
+
+### BOOTSTRAP
+BCPU=8
+BRAM=16384
+BDISK=100
+
+### MASTER
+MASTERS=3 # =>3
+MCPU=8
+MRAM=16384
+MDISK=100
+
+### WORKER
+WORKERS=2
+WCPU=4
+WRAM=16384
+WDISK=100
+
+# NIC for internet access.
+NETIF=eno1
+
+# Set IPAddr, Zones definition info for CoreDNS"
+IPADDR=10.10.177.204
+NETWORK_0=10.10.176.0/21 # ZONE name
+NETWORK_1=10.10.176	# DB file name
+HOST=204		# PTR for api
+NAMESERVERS="10.11.5.4 10.11.5.3 "	# NameServer for Corefile
+
+
+# Copy and paste pull secret from https://cloud.redhat.com/openshift/install/pull-secret
+PULLSECRET=''
+
+# Paste your public ssh key
+SSHKEY=''
+
+# Do you want to install full automatic install ? [Note] This will use ssh login to RHCOS during installation. Please see https://access.redhat.com/solutions/3801571. [Y/N]
+AUTOMATIC_INSTALL=Y
+
+# Set loglevel to debug ? [Y/N]
+DEBUG_INSTALL=Y
+
