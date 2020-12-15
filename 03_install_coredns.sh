@@ -50,8 +50,18 @@ sudo systemctl show -p SubState --value coredns || exit 1
 
 # ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5|xargs -I% sed -i -e "/^search.*/a nameserver %" /etc/resolv.conf
 
+IFACE=$(ip route|grep default |cut -d" " -f5)
 NAMESERVER=$(ip route|grep default |cut -d" " -f3|xargs -I% ip route get %|grep src |cut -d" " -f5)
 grep -v "nameserver $NAMESERVER" /etc/resolv.conf > /tmp/resolv.conf
 sed -i -e "/^search.*/a nameserver $NAMESERVER" /tmp/resolv.conf
 sudo cp /tmp/resolv.conf /etc/resolv.conf
 head -100v /etc/resolv.conf
+sudo cat << EOS > /etc/dhcp/dhclient.d/coredns.sh
+#!/bin/bash
+
+if [[ \${DEVICE_IFACE} == ${IFACE} ]];then
+	sed -i -e "/^search.*/a nameserver ${NAMESERVER}" /etc/resolv.conf
+fi
+EOS
+sudo chmod 755 /etc/dhcp/dhclient.d/coredns.sh
+head -100v /etc/dhcp/dhclient.d/coredns.sh
