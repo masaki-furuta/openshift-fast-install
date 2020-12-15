@@ -18,4 +18,7 @@ fi
 echo ./openshift-install --dir=bare-metal wait-for bootstrap-complete $LOG_LEVEL
 ./openshift-install --dir=bare-metal wait-for bootstrap-complete $LOG_LEVEL 2>&1 | egrep -v '^W'
 
+echo
+sudo virsh destroy bootstrap
+
 date
