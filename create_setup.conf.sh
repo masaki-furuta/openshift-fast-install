@@ -19,19 +19,19 @@ main() {
     cat <<- EOF >>"${setupFile}"
 	### BOOTSTRAP
 	BCPU=8
-	BRAM=16384
+	BRAM=8192
 	BDISK=100
 	
 	### MASTER
 	MASTERS=3 # =>3
 	MCPU=8
-	MRAM=16384
+	MRAM=20480
 	MDISK=100
 	
 	### WORKER
 	WORKERS=2
 	WCPU=4
-	WRAM=16384
+	WRAM=20480
 	WDISK=100
 	
 	EOF

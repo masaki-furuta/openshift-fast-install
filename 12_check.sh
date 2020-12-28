@@ -64,3 +64,4 @@ echo try access https://console-openshift-console.apps.test.lab.local using brow
 echo "About username and passwd, you can find out the the last openshift-install command output"
 
 ./show_kubeadmin_password.sh
+oc patch --type=merge --patch='{"spec":{"mastersSchedulable": false}}' schedulers.config.openshift.io cluster
