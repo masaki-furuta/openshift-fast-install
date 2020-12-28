@@ -12,7 +12,7 @@ cat <<-EOY > ./eo-namespace.yaml
 	EOY
 
 oc create -f ./eo-namespace.yaml
-read -t 30
+read -t 60
 
 cat <<-EOY > ./clo-namespace.yaml 
 	apiVersion: v1
