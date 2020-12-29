@@ -1,5 +1,13 @@
 #!/bin/bash -xv
 
+oc delete -f ./clo-instance.yaml
+oc delete -f ./clo-sub.yaml
+oc delete -f ./clo-og.yaml
+oc delete -f ./eo-sub.yaml
+oc delete -f ./eo-og.yaml
+oc delete -f ./clo-namespace.yaml
+oc delete -f ./eo-namespace.yaml
+
 cat <<-EOY > ./eo-namespace.yaml
 	apiVersion: v1
 	kind: Namespace
@@ -37,7 +45,7 @@ cat <<-EOY > ./eo-og.yaml
 	spec: {}
 	EOY
 
-oc create -f eo-og.yaml
+oc create -f ./eo-og.yaml
 read -t 30
 
 cat <<-EOY > ./eo-sub.yaml
@@ -54,7 +62,7 @@ cat <<-EOY > ./eo-sub.yaml
 	  name: "elasticsearch-operator"
 	EOY
 
-oc create -f eo-sub.yaml
+oc create -f ./eo-sub.yaml
 read -t 30
 
 oc get csv --all-namespaces | egrep 'elasticsearch-operator|NAME' | head
@@ -87,8 +95,8 @@ cat <<-EOY > ./clo-sub.yaml
 	  sourceNamespace: openshift-marketplace
 	EOY
 
-oc create -f clo-sub.yaml
-read -t 30
+oc create -f ./clo-sub.yaml
+read -t 60
 
 oc get csv -n openshift-logging
 
@@ -115,10 +123,11 @@ cat <<-EOY > ./clo-instance.yaml
 	        maxAge: 7d
 	    elasticsearch:
 	      nodeCount: 3 
-	      storage:
+	      storage: {}
+	      #storage:
 	        #storageClassName: "<storage-class-name>" 
-	        size: 20G
-	      redundancyPolicy: "SingleRedundancy"
+	        #size: 20G
+	      #redundancyPolicy: "SingleRedundancy"
 	  visualization:
 	    type: "kibana"  
 	    kibana:
@@ -133,7 +142,7 @@ cat <<-EOY > ./clo-instance.yaml
 	      fluentd: {}
 	EOY
 
-oc create -f clo-instance.yaml
+oc create -f ./clo-instance.yaml
 read -t 30
 
 oc get pods -n openshift-logging
@@ -141,4 +150,5 @@ oc get pods -n openshift-logging
 
 #oc adm pod-network join-projects --to=openshift-operators-redhat openshift-logging
 
-oc get pods --selector component=fluentd -o wide -n openshift-logging
+oc get event -n openshift-logging 
+oc get pods -o wide -n openshift-logging
